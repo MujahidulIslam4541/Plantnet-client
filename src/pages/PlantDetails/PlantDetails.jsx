@@ -4,6 +4,8 @@ import Heading from '../../components/Shared/Heading'
 import Button from '../../components/Shared/Button/Button'
 import PurchaseModal from '../../components/Modal/PurchaseModal'
 import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 
 const PlantDetails = () => {
   let [isOpen, setIsOpen] = useState(false)
@@ -11,6 +13,14 @@ const PlantDetails = () => {
   const closeModal = () => {
     setIsOpen(false)
   }
+
+  const {data:plantsDetails=[]}=useQuery({
+    queryKey:['plantsDetails'],
+    queryFn: async()=>{
+      const { data } = await axios(`${import.meta.env.VITE_lOCALHOST_URL}/plants`)
+      return data
+    }
+  })
 
   return (
     <Container>

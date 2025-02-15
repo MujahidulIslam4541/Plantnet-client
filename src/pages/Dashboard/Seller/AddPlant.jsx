@@ -2,10 +2,17 @@ import { Helmet } from 'react-helmet-async'
 import AddPlantForm from '../../../components/Form/AddPlantForm'
 import { imageUpload } from '../../../api/utils'
 import useAuth from '../../../hooks/useAuth'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
+import axios from 'axios'
 
 const AddPlant = () => {
   const { user } = useAuth()
+  const [uploadImage, setUploadImage] = useState('Upload Image')
+  const [loading, setLoading] = useState(false)
+
   const handleSubmit = async e => {
+    setLoading(true)
     e.preventDefault()
     const from = e.target;
     const name = from.name.value;
@@ -27,7 +34,17 @@ const AddPlant = () => {
       name, description, category, price, quantity, image: imageUrl, seller
 
     }
-    console.table(plantData)
+    // Save data db
+    try {
+      await axios.post(`${import.meta.env.VITE_lOCALHOST_URL}/plants`, plantData)
+      toast.success('Data Added Successfully')
+    }
+    catch (err) {
+      console.log(err)
+    }
+    finally {
+      setLoading(false)
+    }
   }
   return (
     <div>
@@ -36,7 +53,7 @@ const AddPlant = () => {
       </Helmet>
 
       {/* Form */}
-      <AddPlantForm handleSubmit={handleSubmit} />
+      <AddPlantForm loading={loading} handleSubmit={handleSubmit} uploadImage={uploadImage} setUploadImage={setUploadImage} />
     </div>
   )
 }

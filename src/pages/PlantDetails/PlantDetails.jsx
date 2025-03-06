@@ -27,7 +27,7 @@ const PlantDetails = () => {
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>
   }
-  const {name,image,description,category,quantity,seller,price}=plantsDetails
+  const { name, image, description, category, quantity, seller, price } = plantsDetails
   return (
     <Container>
       <Helmet>
@@ -57,7 +57,7 @@ const PlantDetails = () => {
             className='
           text-lg font-light text-neutral-500'
           >
-           {description}
+            {description}
           </div>
           <hr className='my-6' />
 
@@ -91,14 +91,14 @@ const PlantDetails = () => {
                 text-neutral-500
               '
             >
-              Quantity: {quantity}Units Left Only!
+              Quantity: {quantity} Units Left Only!
             </p>
           </div>
           <hr className='my-6' />
           <div className='flex justify-between'>
             <p className='font-bold text-3xl text-gray-500'>Price: {price}$</p>
             <div>
-              <Button label='Purchase' />
+              <Button onClick={()=>setIsOpen(true)} label={quantity > 0 ? 'Purchase' : 'Out Of Stack'} />
             </div>
           </div>
           <hr className='my-6' />

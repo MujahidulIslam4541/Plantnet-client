@@ -10,6 +10,8 @@ import { Fragment, useState } from 'react'
 import Button from '../Shared/Button/Button'
 import useAuth from '../../hooks/useAuth'
 import toast from 'react-hot-toast'
+import { axiosSecure } from '../../hooks/useAxiosSecure'
+import axios from 'axios'
 
 const PurchaseModal = ({ closeModal, isOpen, plantsDetails }) => {
   const { user } = useAuth()
@@ -17,6 +19,7 @@ const PurchaseModal = ({ closeModal, isOpen, plantsDetails }) => {
   const [totalQuantity, SetTotalQuantity] = useState(1)
   const [purchasePrice, setPurchasePrice] = useState(price)
   const [purchaseInfo, setPurchaseInfo] = useState({
+    // Save customer data
     customer: {
       name: user?.displayName,
       email: user?.email,
@@ -32,6 +35,7 @@ const PurchaseModal = ({ closeModal, isOpen, plantsDetails }) => {
     status: 'pending'
   })
 
+  // Handle Plant Quantity
   const handleQuantity = (value) => {
     if (value > quantity) {
       SetTotalQuantity(quantity)
@@ -50,6 +54,18 @@ const PurchaseModal = ({ closeModal, isOpen, plantsDetails }) => {
 
   const handlePurchase = async () => {
     console.table(purchaseInfo)
+    // plant purchase data store db
+    try {
+      await axiosSecure.post('/order', purchaseInfo)
+      // await axios.post('http://localhost:3000/order',purchaseInfo)
+      toast.success(" Order Successful!")
+    }
+    catch (error) {
+      console.log(error)
+    }
+    finally {
+      closeModal()
+    }
   }
 
 

@@ -12,7 +12,6 @@ import LoadingSpinner from '../../components/Shared/LoadingSpinner'
 const PlantDetails = () => {
   const { id } = useParams()
   let [isOpen, setIsOpen] = useState(false)
-  console.log(id)
   const closeModal = () => {
     setIsOpen(false)
   }
@@ -103,7 +102,7 @@ const PlantDetails = () => {
           </div>
           <hr className='my-6' />
 
-          <PurchaseModal closeModal={closeModal} isOpen={isOpen} />
+          <PurchaseModal plantsDetails={plantsDetails} closeModal={closeModal} isOpen={isOpen} />
         </div>
       </div>
     </Container>

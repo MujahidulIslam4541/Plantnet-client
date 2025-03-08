@@ -13,7 +13,7 @@ import toast from 'react-hot-toast'
 import { axiosSecure } from '../../hooks/useAxiosSecure'
 import axios from 'axios'
 
-const PurchaseModal = ({ closeModal, isOpen, plantsDetails }) => {
+const PurchaseModal = ({ closeModal, isOpen, plantsDetails, refetch }) => {
   const { user } = useAuth()
   const { name, category, quantity, price, seller, _id } = plantsDetails
   const [totalQuantity, SetTotalQuantity] = useState(1)
@@ -57,8 +57,10 @@ const PurchaseModal = ({ closeModal, isOpen, plantsDetails }) => {
     // plant purchase data store db
     try {
       await axiosSecure.post('/order', purchaseInfo)
-      // await axios.post('http://localhost:3000/order',purchaseInfo)
+      // quantity updated
+      await axiosSecure.patch(`/order/quantity/${_id}`, { UpdateQuantity: totalQuantity })
       toast.success(" Order Successful!")
+      refetch()
     }
     catch (error) {
       console.log(error)

@@ -26,8 +26,6 @@ const PurchaseModal = ({ closeModal, isOpen, plantsDetails, refetch }) => {
       image: user?.photoURL
     },
     plantId: _id,
-    category: category,
-    name: name,
     quantity: totalQuantity,
     price: purchasePrice,
     address: '',

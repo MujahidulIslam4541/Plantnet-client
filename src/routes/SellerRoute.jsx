@@ -8,7 +8,7 @@ function SellerRoute({ children }) {
 
     if (isLoading) return <LoadingSpinner />
     if (role === 'seller') return children
-    return <Navigate to='/dashboard' state={{ from: location }} replace='true' />
+    return <Navigate to='/dashboard'  replace='true' />
 }
 
 

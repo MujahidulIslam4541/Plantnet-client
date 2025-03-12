@@ -64,17 +64,17 @@ const AuthProvider = ({ children }) => {
 
               }
             )
-        // // Get JWT token
-        // await axios.post(
-        //   `${import.meta.env.VITE_API_URL}/jwt`,
-        //   {
-        //     email: currentUser?.email,
-        //   },
-        //   { withCredentials: true }
-        // )
+        // Get JWT token
+        await axios.post(
+          `${import.meta.env.VITE_lOCALHOST_URL}/jwt`,
+          {
+            email: currentUser?.email,
+          },
+          { withCredentials: true }
+        )
       } else {
         setUser(currentUser)
-        await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
+        await axios.get(`${import.meta.env.VITE_lOCALHOST_URL}/logout`, {
           withCredentials: true,
         })
       }

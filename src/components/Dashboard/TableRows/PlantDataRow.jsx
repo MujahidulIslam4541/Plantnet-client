@@ -1,16 +1,33 @@
 import { useState } from 'react'
 import DeleteModal from '../../Modal/DeleteModal'
 import UpdatePlantModal from '../../Modal/UpdatePlantModal'
+import useAxiosSecure from '../../../hooks/useAxiosSecure'
+import toast from 'react-hot-toast'
 
 const PlantDataRow = ({ refetch, plant }) => {
+  const axiosSecure = useAxiosSecure()
   let [isOpen, setIsOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
-  const { name, price, image, category, quantity } = plant || {}
+  const { name, price, image, category, quantity, _id } = plant || {}
   function openModal() {
     setIsOpen(true)
   }
   function closeModal() {
     setIsOpen(false)
+  }
+  const handelPlantDelete = async () => {
+    try {
+      await axiosSecure.delete(`/plant/${_id}`)
+      refetch()
+      toast.success("Plant delete Successful!")
+    }
+    catch (error) {
+      console.log(error)
+      toast.error(error.response.data)
+    }
+    finally {
+      setIsOpen(false)
+    }
   }
 
   return (
@@ -52,7 +69,7 @@ const PlantDataRow = ({ refetch, plant }) => {
           ></span>
           <span className='relative'>Delete</span>
         </span>
-        <DeleteModal isOpen={isOpen} closeModal={closeModal} />
+        <DeleteModal handleDeleteOrder={handelPlantDelete} isOpen={isOpen} closeModal={closeModal} />
       </td>
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
         <span

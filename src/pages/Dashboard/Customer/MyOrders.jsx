@@ -3,6 +3,7 @@ import CustomerOrderDataRow from '../../../components/Dashboard/TableRows/Custom
 import useAuth from '../../../hooks/useAuth'
 import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from '../../../hooks/useAxiosSecure'
+import LoadingSpinner from '../../../components/Shared/LoadingSpinner'
 
 const MyOrders = () => {
   const { user } = useAuth()
@@ -14,6 +15,7 @@ const MyOrders = () => {
       return data
     }
   })
+  if (isLoading) return <LoadingSpinner></LoadingSpinner>
   console.log(orders)
   return (
     <>
@@ -74,7 +76,7 @@ const MyOrders = () => {
                 </thead>
                 <tbody>
                   {
-                    orders.map((orderData)=><CustomerOrderDataRow refetch={refetch} key={orderData._id} orderData={orderData}></CustomerOrderDataRow>)
+                    orders.map((orderData) => <CustomerOrderDataRow refetch={refetch} key={orderData._id} orderData={orderData}></CustomerOrderDataRow>)
                   }
                 </tbody>
               </table>

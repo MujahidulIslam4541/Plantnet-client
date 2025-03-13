@@ -5,11 +5,13 @@ import useAuth from '../../../hooks/useAuth'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const AddPlant = () => {
   const { user } = useAuth()
   const [uploadImage, setUploadImage] = useState('Upload Image')
   const [loading, setLoading] = useState(false)
+  const navigate=useNavigate()
 
   const handleSubmit = async e => {
     setLoading(true)
@@ -38,6 +40,7 @@ const AddPlant = () => {
     try {
       await axios.post(`${import.meta.env.VITE_lOCALHOST_URL}/plants`, plantData)
       toast.success('Data Added Successfully')
+      navigate('/dashboard/my-inventory')
     }
     catch (err) {
       console.log(err)

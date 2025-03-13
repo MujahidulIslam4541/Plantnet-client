@@ -70,8 +70,6 @@ const PurchaseModal = ({ closeModal, isOpen, plantsDetails, refetch }) => {
     }
   }
 
-
-  console.log(totalQuantity)
   // Total Price Calculation
   return (
     <Transition appear show={isOpen} as={Fragment}>

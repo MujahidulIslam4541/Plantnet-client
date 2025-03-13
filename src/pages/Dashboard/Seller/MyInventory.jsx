@@ -15,7 +15,6 @@ const MyInventory = () => {
     }
   })
   if (isLoading) return <LoadingSpinner></LoadingSpinner>
-  console.log(plants)
   return (
     <>
       <Helmet>

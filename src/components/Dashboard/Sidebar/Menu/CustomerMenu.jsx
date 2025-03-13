@@ -18,7 +18,6 @@ const CustomerMenu = () => {
     try {
       // User status updated
       const { data } = await axiosSecure.patch(`/user/${user?.email}`)
-      console.log(data)
       toast.success("successfully applied to become a seller")
       // closeModal()
     }

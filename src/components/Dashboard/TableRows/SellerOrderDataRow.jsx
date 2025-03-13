@@ -9,21 +9,34 @@ const SellerOrderDataRow = ({ order, refetch }) => {
   const closeModal = () => setIsOpen(false)
   const axiosSecure = useAxiosSecure()
 
+
+  // Order deleted By Seller
   const handleDeleteOrder = async () => {
     try {
       await axiosSecure.delete(`/order-delete/${_id}`)
-      console.log(_id)
       // decrease quantity 
       await axiosSecure.patch(`/order/quantity/${plantId}`, { UpdateQuantity: quantity, status: 'increase' })
       toast.success(" Order cancel Successful!")
       refetch()
     }
     catch (error) {
-      console.log(error)
       toast.error(error.response.data)
     }
     finally {
       closeModal()
+    }
+  }
+
+  // Order ManageMent by seller
+  const handleStatus = async (newStatus) => {
+    if (status === newStatus) return
+    try {
+      await axiosSecure.patch(`/orders/${_id}`, { status: newStatus })
+      toast.success(" Status Updated Successful!")
+      refetch()
+    }
+    catch (error) {
+      toast.error(error.response.data)
     }
   }
   return (
@@ -51,7 +64,9 @@ const SellerOrderDataRow = ({ order, refetch }) => {
         <div className='flex items-center gap-2'>
           <select
             required
+            onChange={(e) => handleStatus(e.target.value)}
             defaultValue={status}
+            disabled={status == 'Delivered'}
             className='p-1 border-2 border-lime-300 focus:outline-lime-500 rounded-md text-gray-900 whitespace-no-wrap bg-white'
             name='category'
           >

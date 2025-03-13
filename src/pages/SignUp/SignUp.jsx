@@ -27,12 +27,10 @@ const SignUp = () => {
         name,
         img
       )
-      console.log(result)
 
       navigate('/')
       toast.success('Signup Successful')
     } catch (err) {
-      console.log(err)
       toast.error(err?.message)
     }
   }
@@ -46,7 +44,6 @@ const SignUp = () => {
       navigate('/')
       toast.success('Signup Successful')
     } catch (err) {
-      console.log(err)
       toast.error(err?.message)
     }
   }

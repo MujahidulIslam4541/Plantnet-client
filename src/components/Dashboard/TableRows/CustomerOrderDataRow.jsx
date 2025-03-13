@@ -12,14 +12,12 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
   const handleDeleteOrder = async () => {
     try {
       await axiosSecure.delete(`/order-delete/${_id}`)
-      console.log(_id)
       // decrease quantity 
       await axiosSecure.patch(`/order/quantity/${plantId}`, { UpdateQuantity: quantity, status: 'increase' })
       toast.success(" Order cancel Successful!")
       refetch()
     }
     catch (error) {
-      console.log(error)
       toast.error(error.response.data)
     }
     finally {

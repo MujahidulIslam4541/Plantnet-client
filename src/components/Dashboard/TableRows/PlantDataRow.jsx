@@ -22,7 +22,6 @@ const PlantDataRow = ({ refetch, plant }) => {
       toast.success("Plant delete Successful!")
     }
     catch (error) {
-      console.log(error)
       toast.error(error.response.data)
     }
     finally {

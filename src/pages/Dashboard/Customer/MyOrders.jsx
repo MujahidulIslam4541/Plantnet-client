@@ -16,7 +16,6 @@ const MyOrders = () => {
     }
   })
   if (isLoading) return <LoadingSpinner></LoadingSpinner>
-  console.log(orders)
   return (
     <>
       <Helmet>

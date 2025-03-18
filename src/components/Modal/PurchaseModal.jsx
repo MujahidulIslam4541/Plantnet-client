@@ -12,12 +12,16 @@ import useAuth from '../../hooks/useAuth'
 import toast from 'react-hot-toast'
 import { axiosSecure } from '../../hooks/useAxiosSecure'
 import { useNavigate } from 'react-router-dom'
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import CheckoutForm from '../Form/CheckOutFom'
+const stripPromise = loadStripe(import.meta.env.VITE_STRIP_PUBLIC_KEY)
 
 const PurchaseModal = ({ closeModal, isOpen, plantsDetails, refetch }) => {
   const { user } = useAuth()
   const { name, category, quantity, price, seller, _id } = plantsDetails
   const [totalQuantity, SetTotalQuantity] = useState(1)
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const [purchasePrice, setPurchasePrice] = useState(price)
   const [purchaseInfo, setPurchaseInfo] = useState({
     // Save customer data
@@ -57,7 +61,7 @@ const PurchaseModal = ({ closeModal, isOpen, plantsDetails, refetch }) => {
     try {
       await axiosSecure.post('/order', purchaseInfo)
       // decrease quantity 
-      await axiosSecure.patch(`/order/quantity/${_id}`, { UpdateQuantity: totalQuantity ,status:'decrease'})
+      await axiosSecure.patch(`/order/quantity/${_id}`, { UpdateQuantity: totalQuantity, status: 'decrease' })
       toast.success(" Order Successful!")
       navigate('/dashboard/my-orders')
       refetch()
@@ -153,6 +157,12 @@ const PurchaseModal = ({ closeModal, isOpen, plantsDetails, refetch }) => {
                     required
                   />
                 </div>
+
+                {/* Payment method input */}
+                <Elements stripe={stripPromise}>
+                  {/* CheckOut Form */}
+                  <CheckoutForm></CheckoutForm>
+                </Elements>
 
                 {/* Purchase button */}
                 <div className='mt-3'>

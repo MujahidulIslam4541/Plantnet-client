@@ -161,13 +161,10 @@ const PurchaseModal = ({ closeModal, isOpen, plantsDetails, refetch }) => {
                 {/* Payment method input */}
                 <Elements stripe={stripPromise}>
                   {/* CheckOut Form */}
-                  <CheckoutForm></CheckoutForm>
+                  <CheckoutForm  purchaseInfo={purchaseInfo} closeModal={closeModal} refetch={refetch}></CheckoutForm>
                 </Elements>
 
-                {/* Purchase button */}
-                <div className='mt-3'>
-                  <Button onClick={handlePurchase} label={`pay ${purchasePrice}$`}></Button>
-                </div>
+
               </DialogPanel>
             </TransitionChild>
           </div>

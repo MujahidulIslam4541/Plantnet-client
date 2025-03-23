@@ -1,9 +1,11 @@
 
-import {CardElement, useElements, useStripe} from '@stripe/react-stripe-js';
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 
 import './CheckOutForm.css';
+import Button from '../Shared/Button/Button';
+import { FcCancel } from 'react-icons/fc';
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ purchaseInfo, closeModal, refetch }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -27,7 +29,7 @@ const CheckoutForm = () => {
     }
 
     // Use your card Element with other Stripe.js APIs
-    const {error, paymentMethod} = await stripe.createPaymentMethod({
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card,
     });
@@ -57,9 +59,14 @@ const CheckoutForm = () => {
           },
         }}
       />
-      <button type="submit" disabled={!stripe}>
-        Pay
-      </button>
+      {/* Purchase button */}
+
+      <div className='flex gap-10'>
+        <Button type="submit" disabled={!stripe} label={`pay ${'10'}$`}></Button>
+        <Button outline={true} onClick={closeModal} label={`Cancel`}> </Button>
+      </div>
+
+
     </form>
   );
 }; export default CheckoutForm;

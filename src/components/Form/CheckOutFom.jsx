@@ -4,10 +4,32 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import './CheckOutForm.css';
 import Button from '../Shared/Button/Button';
 import { FcCancel } from 'react-icons/fc';
+import { useEffect, useState } from 'react';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const CheckoutForm = ({ purchaseInfo, closeModal, refetch }) => {
+  const axiosSecure = useAxiosSecure()
   const stripe = useStripe();
   const elements = useElements();
+  const [clientSecret, setClientSecret] = useState('')
+
+
+
+
+  useEffect(() => {
+    getPaymentIntent()
+
+  }, [purchaseInfo])
+  console.log(clientSecret)
+  const getPaymentIntent = async () => {
+    try {
+      const { data } = await axiosSecure.post(`/create-payment-intent`,
+        { quantity: purchaseInfo?.quantity, plantId: purchaseInfo?.plantId })
+      setClientSecret(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleSubmit = async (event) => {
     // Block native form submission.
@@ -62,7 +84,7 @@ const CheckoutForm = ({ purchaseInfo, closeModal, refetch }) => {
       {/* Purchase button */}
 
       <div className='flex gap-10'>
-        <Button type="submit" disabled={!stripe} label={`pay ${'10'}$`}></Button>
+        <Button type="submit" disabled={!stripe} label={`pay ${purchaseInfo?.price}$`}></Button>
         <Button outline={true} onClick={closeModal} label={`Cancel`}> </Button>
       </div>
 

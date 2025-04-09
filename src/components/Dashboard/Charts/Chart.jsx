@@ -5,9 +5,10 @@ import {
 
 function Chart({ chartData }) {
     console.log(chartData)
+    // const sortedData = [...chartData].sort((a, b) => new Date(b.date) - new Date(a.date));
     return (
         <div>
-            <ComposedChart width={730} height={250} data={[chartData]}>
+            <ComposedChart width={1000} height={300} data={chartData}>
                 <XAxis dataKey="date" />
                 <YAxis />
                 <Tooltip />

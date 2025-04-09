@@ -161,7 +161,7 @@ const PurchaseModal = ({ closeModal, isOpen, plantsDetails, refetch }) => {
                 {/* Payment method input */}
                 <Elements stripe={stripPromise}>
                   {/* CheckOut Form */}
-                  <CheckoutForm  purchaseInfo={purchaseInfo} closeModal={closeModal} refetch={refetch}></CheckoutForm>
+                  <CheckoutForm purchaseInfo={purchaseInfo} closeModal={closeModal} refetch={refetch} totalQuantity={totalQuantity}></CheckoutForm>
                 </Elements>
 
 
